@@ -55,15 +55,89 @@ public class Book {
 
 ## BookDao
 ```java
+public class BookDao {
+	private QueryRunner qr = new TxQueryRunner();
+	 // 查询所有图书
+	public List<Book> findAll() {
+		try {
+			String sql = "select * from book";
+			return qr.query(sql, new BeanListHandler<Book>(Book.class));
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
+	 // 按分类查询
+	public List<Book> findByCategory(String cid) {
+		try {
+			String sql = "select * from book where cid=?";
+			return qr.query(sql, new BeanListHandler<Book>(Book.class), cid);
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	 // 查看图书详细信息
+	public Book findByBid(String bid) {
+		try {
+			String sql = "select * from book where bid=?";
+			return qr.query(sql, new BeanHandler<Book>(Book.class), bid);
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+}
 ```
 
 ## BookService
 ```java
+public class BookService {
+	private BookDao bookDao = new BookDao();
+	 // 查询所有图书
+	public List<Book> findAll() {
+		return bookDao.findAll();
+	}
 
+	 // 按分类查询图书
+	public List<Book> findByCategory(String cid) {
+		return bookDao.findByCategory(cid);
+	}
+
+	// 查看图书信息
+	public Book load(String bid) {
+		return bookDao.findByBid(bid);
+	}
+}
 ```
 
 ## BookServlet
 ```
-
+public class BookServlet extends BaseServlet {
+	private BookService bookService = new BookService();
+	
+	//查看图书信息
+	public String load(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		/* 1. 得到参数bid
+		 * 2. 查询得到Book
+		 * 3. 保存，转发到desc.jsp */
+		request.setAttribute("book", bookService.load(request.getParameter("bid")));
+		return "f:/jsps/book/desc.jsp";
+	}
+	
+	// 查询所有图书
+	public String findAll(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setAttribute("bookList", bookService.findAll());
+		return "f:/jsps/book/list.jsp";
+	}
+	
+	 // 按分类查询
+	public String findByCategory(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String cid = request.getParameter("cid");
+		request.setAttribute("bookList", bookService.findByCategory(cid));
+		return "f:/jsps/book/list.jsp";
+	}
+}
 ```
