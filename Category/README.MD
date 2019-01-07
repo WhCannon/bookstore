@@ -1,8 +1,8 @@
 # 分类模块
-  -[domain](#Category)
-  -[dao](#CategoryDao)
-  -[service](#CategoryService)
-  -[servlet](#CategoryServlet)
+  - [domain](#Category)
+  - [dao](#CategoryDao)
+  - [service](#CategoryService)
+  - [servlet](#CategoryServlet)
   
   
 ## Category
