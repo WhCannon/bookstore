@@ -149,7 +149,7 @@ public class UserServlet extends BaseServlet {
 		request.getSession().invalidate();
 		return "r:/index.jsp";
 	}
-	
+	//登陆
 	public String login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		/*
@@ -163,6 +163,8 @@ public class UserServlet extends BaseServlet {
 		try {
 			User user = userService.login(form);
 			request.getSession().setAttribute("session_user", user);
+			//登陆成功，给用户添加一个购物车，即向session中保存一个cart对象
+			request.getSession().setAttribute("cart", new Cart());
 			return "r:/index.jsp";
 		} catch (UserException e) {
 			request.setAttribute("msg", e.getMessage());
