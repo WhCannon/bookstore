@@ -80,6 +80,15 @@ public class UserDao {
 
 ## UserService
 ```java
+public class UserException extends Exception {//自定义异常
+	public UserException() {
+		super();
+	}
+	public UserException(String message) {
+		super(message);
+	}
+}
+
 
 ```
 
