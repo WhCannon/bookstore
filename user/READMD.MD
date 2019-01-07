@@ -3,6 +3,7 @@
   - [UserDao](#userdao)
   - [UserService](#userservice)
   - [UserServlet](#userservlet)
+  - [扩展：消息格式化](#消息格式化)
   
   
 ## User
@@ -184,6 +185,21 @@ public class UserService {
 			throw new UserException("密码错误！");
 		if(!user.isState()) throw new UserException("尚未激活！");
 		return user;
+	}
+}
+```
+* 消息格式化
+```java
+public class Demo1 {
+	//消息格式化
+	public void fun1() {
+		/* MessageFormat.format(模板,参数)：需要给出模板
+		 * 包含了占位符的字符串就是模板！
+		 * 占位符：{0}、{1}、{2}...
+		 * 参数是可变的，需要指定模板中占位符的值！有几个占位符就要提供几个参数
+		 */
+		String s = MessageFormat.format("{0}或{1}错误！", "用户名", "密码");
+		System.out.println(s);
 	}
 }
 ```
