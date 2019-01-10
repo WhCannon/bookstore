@@ -17,7 +17,7 @@ public class Order {
 	private User owner;// 订单所有者
 	private String address;// 收货地址
 	private List<OrderItem> orderItemList;//当前订单下所有条目
-  getter和setter
+  	getters和setters
   }
 ```
 
@@ -30,7 +30,7 @@ public class OrderItem {
 	private double subtotal;// 小计
 	private Order order;// 所属订单
 	private Book book;// 所要购买的图书
-  getter和setter
+  	getters和setters
   }
 ```
 
