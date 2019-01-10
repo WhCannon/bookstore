@@ -104,7 +104,9 @@ public class OrderDao {
 		List<Map<String,Object>> mapList = qr.query(sql, new MapListHandler(), order.getOid());
 		/* mapList是多个map，每个map对应一行结果集
 		 * 一行：
-		 * {iid=C7AD5492F27D492189105FB50E55CBB6, count=2, subtotal=60.0, oid=1AE8A70354C947F8B81B80ADA6783155, bid=7, bname=精通Hibernate,price=30.0, author=张卫琴, image=book_img/8991366-1_l.jpg, cid=2}
+		 * {iid=C7AD5492F27D492189105FB50E55CBB6, count=2, 
+		 subtotal=60.0, oid=1AE8A70354C947F8B81B80ADA6783155, bid=7, 
+		 bname=精通Hibernate,price=30.0, author=张卫琴, image=book_img/8991366-1_l.jpg, cid=2}
 		 * 我们需要使用一个Map生成两个对象：OrderItem、Book，然后再建立两者的关系（把Book设置给OrderItem） */
 		
 		 // 循环遍历每个Map，使用map生成两个对象，然后建立关系（最终得到一个OrderItem），把OrderItem保存起来
@@ -171,6 +173,48 @@ public class OrderDao {
 
 ## OrderService
 ```java
+public class OrderService {
+	private OrderDao orderDao = new OrderDao();
+	
+	 // 添加订单,需要处理事务
+	public void add(Order order) {
+		try {
+			// 开启事务
+			JdbcUtils.beginTransaction();
+			orderDao.addOrder(order);//插入订单
+			orderDao.addOrderItemList(order.getOrderItemList());//插入订单中的所有条目
+			// 提交事务
+			JdbcUtils.commitTransaction();
+		} catch(Exception e) {
+			// 回滚事务
+			try {
+				JdbcUtils.rollbackTransaction();
+			} catch (SQLException e1) {
+			}
+			throw new RuntimeException(e);
+		}
+	}
+
+	 // 我的订单
+	public List<Order> myOrders(String uid) {
+		return orderDao.findByUid(uid);
+	}
+
+	 // 加载订单
+	public Order load(String oid) {
+		return orderDao.load(oid);
+	}
+	
+	 // 确认收货
+	public void confirm(String oid) throws OrderException {
+		 // 1. 校验订单状态，如果不是3，抛出异常
+		int state = orderDao.getStateByOid(oid);//获取订单状态
+		if(state != 3) throw new OrderException("订单确认失败，您不是什么好东西！");
+		
+		 // 2. 修改订单状态为4，表示交易成功
+		orderDao.updateState(oid, 4);
+	}
+}
 
 ```
 
