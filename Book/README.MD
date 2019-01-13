@@ -3,7 +3,8 @@
   - [servlet](#bookservlet)
   - [service](#bookservice)
   - [dao](#bookdao)
-  
+  - [后台图书管理](#adminbookservlet)
+  - [后台添加上传图书](#adminaddbookservlet)
 
 ## Book
 ```java
@@ -193,4 +194,15 @@ public class BookServlet extends BaseServlet {
 		return "f:/jsps/book/list.jsp";
 	}
 }
+```
+
+## AdminBookServlet
+```java
+
+```
+
+## AdminAddBookServlet
+上传不能使用BaseServlet
+```java
+
 ```
