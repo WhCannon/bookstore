@@ -4,5 +4,3 @@
   - [书模块](https://github.com/WhCannon/bookstore/tree/master/Book/README.MD) 
   - [购物车模块](https://github.com/WhCannon/bookstore/tree/master/Cart/README.MD) 
   - [订单模块](https://github.com/WhCannon/bookstore/tree/master/Order/README.MD)  
-  - [后台分类管理](https://github.com/WhCannon/bookstore/tree/master/adminCategory/README.MD)
-  - [后台图书管理](https://github.com/WhCannon/bookstore/tree/master/adminBook/README.MD)  
