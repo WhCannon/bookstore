@@ -147,6 +147,7 @@ public class BookDao {
 ```java
 public class BookService {
 	private BookDao bookDao = new BookDao();
+	
 	 // 查询所有图书
 	public List<Book> findAll() {
 		return bookDao.findAll();
@@ -157,9 +158,21 @@ public class BookService {
 		return bookDao.findByCategory(cid);
 	}
 
-	// 查看图书信息
 	public Book load(String bid) {
 		return bookDao.findByBid(bid);
+	}
+
+	 //　添加图书
+	public void add(Book book) {
+		bookDao.add(book);
+	}
+	
+	public void delete(String bid) {
+		bookDao.delete(bid);
+	}
+
+	public void edit(Book book) {
+		bookDao.edit(book);
 	}
 }
 ```
