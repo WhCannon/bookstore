@@ -178,7 +178,7 @@ public class BookService {
 ```
 
 ## BookServlet
-```
+```java
 public class BookServlet extends BaseServlet {
 	private BookService bookService = new BookService();
 	
@@ -206,7 +206,7 @@ public class BookServlet extends BaseServlet {
 		request.setAttribute("bookList", bookService.findByCategory(cid));
 		return "f:/jsps/book/list.jsp";
 	}
-}}
+}
 ```
 
 ## AdminBookServlet
