@@ -65,6 +65,46 @@ public class CategoryDao {
 			throw new RuntimeException(e);
 		}
 	}
+
+	 // 添加分类
+	public void add(Category category) {
+		try {
+			String sql = "insert into category values(?,?)";
+			qr.update(sql, category.getCid(), category.getCname());
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	 // 删除分类
+	public void delete(String cid) {
+		try {
+			String sql = "delete from category where cid=?";
+			qr.update(sql, cid);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	 // 加载分类
+	public Category load(String cid) {
+		try {
+			String sql = "select * from category where cid=?";
+			return qr.query(sql, new BeanHandler<Category>(Category.class), cid);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	 // 修改分类
+	public void edit(Category category) {
+		try {
+			String sql = "update category set cname=? where cid=?";
+			qr.update(sql, category.getCname(), category.getCid());
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
 ```
 
