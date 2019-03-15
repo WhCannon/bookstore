@@ -34,7 +34,6 @@ public class UserDao {
 			throw new RuntimeException(e);
 		}
 	}
-	
 	// 按邮箱查询
 	public User findByEmail(String email) {
 		try {
@@ -44,7 +43,6 @@ public class UserDao {
 			throw new RuntimeException(e);
 		}
 	}
-	
 	// 插入User
 	public void add(User user) {
 		try {
@@ -57,7 +55,6 @@ public class UserDao {
 			throw new RuntimeException(e);
 		}
 	}
-	
 	// 按激活码查询
 	public User findByCode(String code) {
 		try {
@@ -67,7 +64,6 @@ public class UserDao {
 			throw new RuntimeException(e);
 		}
 	}
-	
 	// 修改指定用户的指定状态
 	public void updateState(String uid, boolean state) {
 		try {
@@ -91,13 +87,11 @@ public class UserException extends Exception {//自定义异常
 // User业务层
 public class UserService {
 	private UserDao userDao = new UserDao();
-	
 	 // 注册功能
 	public void regist(User form) throws UserException{
 		// 校验用户名
 		User user = userDao.findByUsername(form.getUsername());
 		if(user != null) throw new UserException("用户名已被注册！");
-		
 		// 校验email
 		user = userDao.findByEmail(form.getEmail());
 		if(user != null) throw new UserException("Email已被注册！");
@@ -105,7 +99,6 @@ public class UserService {
 		// 插入用户到数据库
 		userDao.add(form);
 	}
-	
 	// 激活功能
 	public void active(String code) throws UserException {
 		// 1. 使用code查询数据库，得到user
@@ -117,7 +110,6 @@ public class UserService {
 		// 4. 修改用户的状态
 		userDao.updateState(user.getUid(), true);
 	}
-	
 	 // 登录功能
 	public User login(User form) throws UserException {
 		/*
@@ -142,7 +134,6 @@ public class UserService {
 // User表述层
 public class UserServlet extends BaseServlet {
 	private UserService userService = new UserService();
-	
 	 // 退出功能
 	public String quit(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -172,7 +163,6 @@ public class UserServlet extends BaseServlet {
 			return "f:/jsps/user/login.jsp";
 		}
 	}
-	
 	 // 激活功能
 	public String active(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -191,7 +181,6 @@ public class UserServlet extends BaseServlet {
 		}
 		return "f:/jsps/msg.jsp";
 	}
-	
 	 // 注册功能
 	public String regist(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -203,7 +192,6 @@ public class UserServlet extends BaseServlet {
 		 *   > 如果出错,保存错误信息、form到request域，转发到regist.jsp
 		 * 5. 发邮件
 		 * 6. 保存成功信息转发到msg.jsp */
-		
 		// 封装表单数据
 		User form = CommonUtils.toBean(request.getParameterMap(), User.class);
 		// 补全
@@ -218,15 +206,13 @@ public class UserServlet extends BaseServlet {
 			errors.put("username", "用户名不能为空！");
 		} else if(username.length() < 3 || username.length() > 10) {
 			errors.put("username", "用户名长度必须在3~10之间！");
-		}
-		
+		}	
 		String password = form.getPassword();
 		if(password == null || password.trim().isEmpty()) {
 			errors.put("password", "密码不能为空！");
 		} else if(password.length() < 3 || password.length() > 10) {
 			errors.put("password", "密码长度必须在3~10之间！");
-		}
-		
+		}	
 		String email = form.getEmail();
 		if(email == null || email.trim().isEmpty()) {
 			errors.put("email", "Email不能为空！");
@@ -241,8 +227,7 @@ public class UserServlet extends BaseServlet {
 			request.setAttribute("errors", errors);
 			request.setAttribute("form", form);
 			return "f:/jsps/user/regist.jsp";
-		}
-		
+		}	
 		 // 调用service的regist()方法
 		try {
 			userService.regist(form);
@@ -253,8 +238,7 @@ public class UserServlet extends BaseServlet {
 			request.setAttribute("msg", e.getMessage());
 			request.setAttribute("form", form);
 			return "f:/jsps/user/regist.jsp";
-		}
-		
+		}		
 		// 发邮件
 		// 获取配置文件内容
 		Properties props = new Properties();
@@ -283,8 +267,7 @@ public class UserServlet extends BaseServlet {
 		try {
 			MailUtils.send(session, mail);//发邮件！
 		} catch (MessagingException e) {
-		}
-		
+		}		
 		/* 1. 保存成功信息
 		 * 2. 转发到msg.jsp */
 		request.setAttribute("msg", "恭喜，注册成功！请马上到邮箱激活");
@@ -298,7 +281,6 @@ public class UserServlet extends BaseServlet {
 public class LoginFilter implements Filter {
 	public void destroy() {
 	}
-
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		/*
@@ -316,7 +298,6 @@ public class LoginFilter implements Filter {
 					.forward(httpRequest, response);
 		}
 	}
-
 	public void init(FilterConfig fConfig) throws ServletException {
 	}
 }
