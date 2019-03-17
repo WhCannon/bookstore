@@ -205,6 +205,7 @@ public class AdminCategoryServlet extends BaseServlet {
 }
 ```
 ## ajax方式
+可以把分类信息这一部分单独写一个页面，然后让其他页面都包含这个页面，这样就能保证所有页面都能显示分类信息
 ```java
 <script>
 ${function(){
