@@ -4,7 +4,7 @@
   - [service](#categoryservice)
   - [servlet](#categoryservlet)
   - [后台分类管理](#admincategoryservlet)
-  
+  - [查询分类的ajax方式](#ajax方式)
 ## Category
 ```java
 public class Category {
@@ -203,4 +203,19 @@ public class AdminCategoryServlet extends BaseServlet {
 		return "f:/adminjsps/admin/category/list.jsp";
 	}
 }
+```
+## ajax方式
+```java
+<script>
+${function(){
+	var url="/CategoryServlet";
+	var obj={"method":"findAll"};
+	$.post(url,obj,function(data){
+		$.each(data,function(i,obj){
+			var li ="<li><a href='#'>"+obj.cname+"</a></li>";
+			$("#MyUL").append(li);  // id选择器，选择要把分类信息添加在哪里
+		});
+	};"json");
+});
+</script>
 ```
