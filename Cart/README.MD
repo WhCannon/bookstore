@@ -86,7 +86,7 @@ public class CartServlet extends BaseServlet {
 	// 添加购物条目
 	public String add(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/* 1. 得到车
+		/* 1. 得到购物车
 		 * 2. 得到条目（得到图书和数量）
 		 * 3. 把条目添加到车中 */
 		 
