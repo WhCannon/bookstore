@@ -102,7 +102,7 @@ public class OrderDao {
 		String sql = "select * from orderitem i, book b where i.bid=b.bid and oid=?";
 		 // 因为一行结果集对应的不再是一个javabean，所以不能再使用BeanListHandler，而是MapListHandler
 		List<Map<String,Object>> mapList = qr.query(sql, new MapListHandler(), order.getOid());
-		/* mapList是多个map，每个map对应一行结果集
+		/* mapList是一个List,里面放了多个map，每个map对应一行结果集
 		 * 一行：
 		 * {iid=C7AD5492F27D492189105FB50E55CBB6, count=2, 
 		 subtotal=60.0, oid=1AE8A70354C947F8B81B80ADA6783155, bid=7, 
