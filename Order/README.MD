@@ -107,7 +107,7 @@ public class OrderDao {
 		 * {iid=C7AD5492F27D492189105FB50E55CBB6, count=2, 
 		 subtotal=60.0, oid=1AE8A70354C947F8B81B80ADA6783155, bid=7, 
 		 bname=精通Hibernate,price=30.0, author=张卫琴, image=book_img/8991366-1_l.jpg, cid=2}
-		 * 我们需要使用一个Map生成两个对象：OrderItem、Book，然后再建立两者的关系（把Book设置给OrderItem） */
+* Map里面包含了OrderItem、Book的信息，我们需要使用一个Map生成两个对象：OrderItem、Book，然后再建立两者的关系（把Book设置给OrderItem） */
 		
 		 // 循环遍历每个Map，使用map生成两个对象，然后建立关系（最终得到一个OrderItem），把OrderItem保存起来
 		List<OrderItem> orderItemList = toOrderItemList(mapList);
